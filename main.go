@@ -21,12 +21,14 @@ func main() {
 
 	// Middleware
 	router.Use(middleware.ErrorHandle)
+	router.Use(middleware.LoggingMiddleware)
 
 	// Route Path
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		http.Redirect(w, r, "https://haik.my.id", http.StatusPermanentRedirect)
-	})
+	}).Methods("GET")
 	router.HandleFunc("/login", auth.Login).Methods("POST")
+	router.HandleFunc("/validate", auth.Validate).Methods("POST")
 
 	// Listen and Serve Router Mux
 	PORT := helper.GetEnv("PORT", "8000")
