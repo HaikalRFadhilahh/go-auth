@@ -67,7 +67,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		"iat":      time.Now().Unix(),
 	})
 
-	tokenJWT, err := claims.SignedString([]byte(helper.GetEnv("JWT_SECRET", "go-app")))
+	tokenJWT, err := claims.SignedString([]byte(helper.GetEnv("JWT_SECRET", "")))
 	if err != nil {
 		helper.ErrorResponse(w, http.StatusInternalServerError, "error", "Cannot Generate Token!!", nil)
 		return
